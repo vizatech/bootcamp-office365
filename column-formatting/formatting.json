@@ -1,0 +1,22 @@
+{
+    "$schema": "https://developer.microsoft.com/json-schemas/sp/v2/column-formatting.schema.json",
+    "elmType": "div",
+    "style": {
+        "background-color": "=if(@currentField < 0, '#00bcf2', if(@currentField < 10, '#c7e0f4', if(@currentField < 20, '#ffb900', '#edebe9'"
+    },
+    "children": [{
+            "elmType": "span",
+            "style": {
+                "display": "inline-block",
+                "padding": "0 4px"
+            },
+            "attributes": {
+                "iconName": "=if(@currentField < 0, 'Snowflake', 'Sunny'"
+            }
+        },
+        {
+            "elmType": "span",
+            "txtContent": "@currentField"
+        }
+    ]
+}
