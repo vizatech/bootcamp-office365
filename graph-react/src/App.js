@@ -1,14 +1,14 @@
 import React, { Component } from 'react';
 import { Container, Jumbotron, Button, NavLink } from 'reactstrap';
-import NavBar from './NavBar';
-import 'bootstrap/dist/css/bootstrap.css';
-import { GraphProvider } from './GraphProvider';
-import config from './Config';
 import { UserAgentApplication } from 'msal';
+import 'bootstrap/dist/css/bootstrap.css';
+
+import NavBar from './NavBar';
+import config from './Config';
+import { GraphProvider } from './GraphProvider';
 
 class App extends Component {
-  constructor(props) {
-    super(props);
+  constructor(props) { super(props);
 
     // Информация о приложении для авторизации
     this.graphApp = new UserAgentApplication({
@@ -21,12 +21,15 @@ class App extends Component {
         storeAuthStateInCookie: true
       }
     });
+
     var user = this.graphApp.getAccount();
+
     this.state = {
       isAuthenticated: (user !== null),
       site: {},
       user: {}
     };
+
     if (user) {
       this.initGraphProvider();
     }
@@ -34,11 +37,14 @@ class App extends Component {
 
   // Инициализация провайдера для работы с Microsoft Graph
   async initGraphProvider() {
+
     var token = await this.getToken();
+
     if (token) {
       this.graphProvider = new GraphProvider(token);
       this.getUser();
     }
+
   }
 
   render() {
@@ -58,14 +64,18 @@ class App extends Component {
 
             </Jumbotron>
           </Container>
+          
           <Container>
             <p>
               Список с данными для авторизованных внешних пользователей
-                </p>
-            {this.state.isAuthenticated == true
-              ? <Button color="info" onClick={this.getRootSite.bind(this)}>Открыть</Button>
-              : null}
+            </p>
+            {
+              (this.state.isAuthenticated == true) ? 
+                <Button color="info" onClick={this.getRootSite.bind(this)}>Открыть</Button>
+                : null
+            }
           </Container>
+
           <Container>
             {this.state.site
               ? <NavLink href={this.state.site.webUrl}>{this.state.site.displayName}</NavLink>
